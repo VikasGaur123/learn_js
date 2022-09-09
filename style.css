@@ -1,0 +1,44 @@
+.top{
+    padding: 8px;
+    border-radius: 10px;
+    margin-left: 35%;
+    width: 27%;
+
+    background-color: rgb(60, 58, 58);
+
+}
+.flex-box{
+    /* background-color: red; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+.flex-box2{
+    display: flex;
+    justify-content: center;
+}
+button{
+    background-color: gray;
+}
+.btn{
+    border-radius: 12px;
+    font-size: 23px;
+    width: 89px;
+    height: 67px;
+    padding: 2px;
+    margin: 1px;
+    background-color: rgb(116, 116, 116);
+}
+.ipt{
+    background-color: whitesmoke;
+    height: 50px;
+    width: 90%;
+    text-size-adjust: 20px;
+    font-size: 30px;
+    border-radius: 12px;
+}
+button:hover {
+    background-color: black;
+    color: white;
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1 style="text-align: center;">Calculator</h1>
+    <div class="top" style="position:absolute;">
+        <div class="flex-box">
+            <Input class="ipt" type="text" id="screen"></input>
+        </div>
+        <div class="flex-box2">
+            <button class="btn" value="7">7</button>
+            <button class="btn" value="8">8</button>
+            <button class="btn" value="9">9</button>
+            <button class="btn" value="+">+</button>
+        </div>
+        <div class="flex-box2">
+            <button class="btn" value="4">4</button>
+            <button class="btn" value="5">5</button>
+            <button class="btn" value="6">6</button>
+            <button class="btn" value="*">x</button>
+        </div>
+        <div class="flex-box2">
+            <button class="btn" value="1">1</button>
+            <button class="btn" value="2">2</button>
+            <button class="btn" value="3">3</button>
+            <button class="btn" value="/">/</button>
+        </div>
+        <div class="flex-box2">
+            <button class="btn" value="=">=</button>
+            <button class="btn" value="0">0</button>
+            <button class="btn" value="C">Clr</button>
+            <button class="btn" value="-">-</button>
+        </div>
+    </div>
+    </div>
+    </div>
+</body>
+<script>
+    let screen = document.getElementById('screen');
+    let buttons = document.querySelectorAll('button');
+    let screenValue = '';
+    for (item of buttons) {
+        item.addEventListener('click', (e) => {
+            buttonText = e.target.value;
+            console.log(buttonText); // see the value that works or not!
+            if(buttonText === undefined){
+                screen.value = screenValue = '';
+            }
+            if (buttonText == '=') {
+                screen.value = screenValue = eval(screenValue);
+
+                }else if (buttonText == 'C') {
+                    screen.value = screenValue = '';
+                }
+                else {
+                    screenValue += buttonText;
+                    screen.value = screenValue;
+                }
+
+            })
+    }
+</script>
+
+</html>
