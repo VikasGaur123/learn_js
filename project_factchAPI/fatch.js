@@ -188,7 +188,7 @@ function prev() {
 // when user entry fastly then this is taking time to fetching secarch function
 
 const search = debounce(() => searchitems());
-function debounce(func, timeout = 300){
+function debounce(func, timeout = 700){
   let timer;
   return (...args) => {
     clearTimeout(timer);
