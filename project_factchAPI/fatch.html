@@ -7,43 +7,18 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <title>Blogs</title>
-  <style>
-    .selector-for-some-widget {
-      box-sizing: content-box;
-    }
-    #loading{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-  width: 150px;
-  height: 150px;
-  margin: -75px 0 0 -75px;
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  animation: spin 1s linear infinite;
-  }
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  select{
-    display: inline-block;
-  }
-  </style>
+  <link rel="stylesheet" href="fatch.css">
 </head>
 
 <body>
   <h1>Blogs</h1>
+  <input type="text" class="form-control" id="search" onkeyup="search()" placeholder="Search"> 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
-  <button class="btn btn-primary">create new post</button>
+  <button class="btn btn-outline-success">create new post</button>
   <br><br>
-  <input type="text" id="search" onkeyup="search()"> 
+  <!-- <input type="text" class="form-control" id="search" onkeyup="search()">  -->
   <select id="select" onchange="asc_dsc()">
     <option >select</option>
     <option value="id">Id</option>
@@ -66,10 +41,11 @@
       <td>Action</td>
     </tr>
   </table>
-  <button id="page" onclick="prev()">prev</button>
-  <div id="pbtn">
-    <div>
-      <button id="page" onclick="next()">next</button>
+  <button id="page"  class="btn btn-outline-dark" value="prev" >prev</button> 
+  <!-- onclick="prev()" -->
+  <span id="pbtn"></span>
+  <button id="page"  class="btn btn-outline-dark" value="next" >next</button>
+  <!-- onclick="next()" -->
 </body>
 <script src="fatch.js"></script>
 
