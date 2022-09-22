@@ -1,10 +1,6 @@
 import React from 'react';
 function ShowValue(props) {
     return (
-
-
-
-
         //<div> {props.name}</div>
         <>
             <div>
