@@ -1,96 +1,149 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import ShowValue from './showOtherComponent';
+import ShowBesides from './ShowBesides';
+import Input from '@mui/material/Input';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 
-class NameForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
 
-  handleChange(event) {
-    // const target = event.target.value;
-    const value = event.target.value;
-    // console.log("value=",event.target.value);
-    const name = event.target.name;
-    // console.log("name=",name);
-    this.setState({
-      [name]: value
-    });
-  }
+function FormValidation() {
+  const [inputValues, setInputValue] = useState({
+    name: "",
+    email: "",
+    number: "",
+    meassage: "",
+  });
+  
+  const [validation, setValidation] = useState({
+    name: "",
+    email: "",
+    number: "",
+    meassage: "",
+  });
 
-  handleSubmit(event) {
-   console.log("event",this.state.email);
-   let n=this.state.name;
-   let e=this.state.email;
-   let m=this.state.meassage;
-   let ph=this.state.number;
-   console.log(typeof ph);
-   let Echack=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
-   if(n.length!=0 && n.length>=5){
-     console.log("ok hai");
-     document.getElementById('NE').innerHTML='';
-   }
-   else{
-    document.getElementById('NE').innerHTML='Enter valid Name';
-   }
-   if(ph>0){
-    document.getElementById('PH').innerHTML='';
+  function handleChange(event) {
+    const { name, value } = event.target;
+    console.log('name=', name, 'value', value);
+    // console.log(value,'value');
+    setInputValue({ ...inputValues, [name]: value });
+    //checkValidation();
+  };
 
-   }else{
-    document.getElementById('PH').innerHTML='Enter valid phone';
 
-   }
-   if(e!='' && Echack.test(e))
-   {
-    document.getElementById('EM').innerHTML='';
-   }else{
-    document.getElementById('EM').innerHTML='Enter Valid Email';
-   }
-   if(m==undefined){
-    document.getElementById('MA').innerHTML='Enter Valid Meassage';
-   }else{
-    document.getElementById('MA').innerHTML='';
-   }
-  //  // alert('A name was submitted: ' + this.state.value);
-  // let [name]=event.target.name.value;
-  //  console.log(name);
+  function handleSubmit(event) {
     event.preventDefault();
+  };
+  const checkValidation = () => {
+    let errors = validation;
+
+    //console.log("event",inputValues.email);
+    //  let Name=inputValues.name;
+    let Email = inputValues.email;
+    let Meassage = inputValues.meassage;
+    let PhoneNo = inputValues.number;
+
+    // let phoneNoChack = /^\(?(\d{3})\)?[-]?(\d{3})[- ]?(\d{4})$/;
+    //let phoneNoChack =/^\d{10}$/;
+
+    let EmailValidChack = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
+    if (inputValues.name.length != 0 && inputValues.name.length >= 5) {
+      // document.getElementById('Name').innerHTML='';
+      errors.name = "";
+    }
+    else {
+      // document.getElementById('Name').innerHTML='Enter valid Name';
+      errors.name = "Enter valid Name";
+    }
+    if (PhoneNo.length>=10) {
+      // document.getElementById('PhoneNo').innerHTML = '';
+      errors.number = "";
+
+    } else {
+      // document.getElementById('PhoneNo').innerHTML = 'Enter valid phone';
+      errors.number = "Enter valid phone";
+    }
+    if (Email.trim() && EmailValidChack.test(Email)) {
+      // document.getElementById('Email').innerHTML='';
+      errors.email = "";
+    } else {
+      // document.getElementById('Email').innerHTML='Enter Valid Email';
+      errors.email = "Email is required";
+    }
+    if (Meassage.length < 15 || Meassage == '') {
+      // document.getElementById('Meassage').innerHTML='Enter Valid Meassage';
+      errors.meassage = "Enter valid meassage";
+    } else {
+      // document.getElementById('Meassage').innerHTML='';
+      errors.meassage = "";
+    }
+    setValidation(errors);
   }
-  render() {
-    return (
-      <>
+  useEffect(() => {
+    checkValidation();
+  }, [inputValues]);
+
+
+  return (
+    <>
       <h1>Form </h1>
-      <form onSubmit={this.handleSubmit}>
+      <form
+        onSubmit={(event) => handleSubmit(event)}
+      >
         <label>
           Name:
-          <input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
-        </label><b><span className="error" id="NE"> </span></b><br/><br/>
+          <Input type="text" name="name"
+            onChange={(event) => handleChange(event)}
+            value={inputValues.name}
+            />
+        </label><b>
+          { <span style={{color: 'red'}}>{validation.name}</span>}
+        </b><br /><br />
         <label>
           Email:
-          <input type="email" name="email" value={this.state.email}  onChange={this.handleChange} />
-        </label><b><span id="EM"> </span></b><br/><br/>
+          <Input type="email"
+            name="email"
+            onChange={(event) => handleChange(event)}
+            value={inputValues.email}
+          />
+        </label><b>
+          {/* <span id="Email"> </span> */}
+          {<span style={{color: 'red'}}>{validation.email}</span>}
+        </b><br /><br />
         <label>
           Phone Number:
-          <input type="number" name='number' value={this.state.number} onChange={this.handleChange} />
-        </label><b><span id="PH"> </span></b><br/><br/>
+          <Input type="number"
+            name='number'
+            onChange={(event) => handleChange(event)}
+            value={inputValues.number}
+          />
+        </label><b>
+          {/* <span id="PhoneNo"> </span> */}
+          {<span style={{color: 'red'}}>{validation.number}</span>}
+          </b><br /><br />
         <label>
           Meassage:
-          <textarea name='meassage' value={this.state.meassage} onChange={this.handleChange}  />
-        </label><b><span id="MA"> </span></b><br/><br/>
-        <input type="submit"  value="Submit" />
+          <TextareaAutosize
+            name='meassage'
+            onChange={(event) => handleChange(event)}
+            value={inputValues.meassage}
+          />
+        </label><b>
+          {/* <span id="Meassage"> </span> */}
+
+          {<span style={{color: 'red'}}>{validation.meassage}</span>}
+        </b><br /><br />
+        <button type="submit" value="Submit">Submit</button>
       </form>
-      <ShowValue name= {this.state.name} email={this.state.email} number={this.state.number} meassage={this.state.meassage} />
-      </>
-    );
-  }
+      <br /><br />
+      <ShowBesides
+        inputValues={inputValues}
+      />
+    </>
+  )
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-<>
-<NameForm />
-</>
+  <>
+    <FormValidation />
+  </>
 );
