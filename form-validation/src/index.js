@@ -4,8 +4,6 @@ import ShowBesides from './ShowBesides';
 import Input from '@mui/material/Input';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 
-
-
 function FormValidation() {
   const [inputValues, setInputValue] = useState({
     name: "",
@@ -13,7 +11,7 @@ function FormValidation() {
     number: "",
     meassage: "",
   });
-  
+
   const [validation, setValidation] = useState({
     name: "",
     email: "",
@@ -22,53 +20,61 @@ function FormValidation() {
   });
 
   function handleChange(event) {
+    // console.log(event, "eventttt");
     const { name, value } = event.target;
-    console.log('name=', name, 'value', value);
+    //console.log('name=', name, 'value', value);
     // console.log(value,'value');
+    // checkValidation();
     setInputValue({ ...inputValues, [name]: value });
-    //checkValidation();
   };
-
+  console.log(inputValues, "input");
 
   function handleSubmit(event) {
     event.preventDefault();
   };
   const checkValidation = () => {
     let errors = validation;
-
+    console.log(errors, 'errors');
+    console.log("chala hai");
     //console.log("event",inputValues.email);
     //  let Name=inputValues.name;
     let Email = inputValues.email;
     let Meassage = inputValues.meassage;
     let PhoneNo = inputValues.number;
 
-    // let phoneNoChack = /^\(?(\d{3})\)?[-]?(\d{3})[- ]?(\d{4})$/;
-    //let phoneNoChack =/^\d{10}$/;
-
-    let EmailValidChack = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
     if (inputValues.name.length != 0 && inputValues.name.length >= 5) {
       // document.getElementById('Name').innerHTML='';
       errors.name = "";
+      // setValidation({ ...validation, name:"" });
     }
     else {
       // document.getElementById('Name').innerHTML='Enter valid Name';
       errors.name = "Enter valid Name";
+      // setValidation({ ...validation, name:"Enter valid Name" });
     }
-    if (PhoneNo.length>=10) {
+    if (PhoneNo.length>= 9) {
       // document.getElementById('PhoneNo').innerHTML = '';
+      //console.log('PhoneNo_len', PhoneNo.length);
       errors.number = "";
-
     } else {
       // document.getElementById('PhoneNo').innerHTML = 'Enter valid phone';
       errors.number = "Enter valid phone";
     }
-    if (Email.trim() && EmailValidChack.test(Email)) {
-      // document.getElementById('Email').innerHTML='';
-      errors.email = "";
-    } else {
-      // document.getElementById('Email').innerHTML='Enter Valid Email';
+
+    let at = Email.indexOf('@');
+    let dot = Email.lastIndexOf('.');
+    if (at < 1 || dot - at < 3 || dot >= Email.length - 2) {
       errors.email = "Email is required";
+    } else {
+      errors.email = "";
     }
+    // if (Email.trim() && EmailValidChack.test(Email)) {
+    //   // document.getElementById('Email').innerHTML='';
+    //   errors.email = "";
+    // } else {
+    //   // document.getElementById('Email').innerHTML='Enter Valid Email';
+    //   errors.email = "Email is required";
+    // }
     if (Meassage.length < 15 || Meassage == '') {
       // document.getElementById('Meassage').innerHTML='Enter Valid Meassage';
       errors.meassage = "Enter valid meassage";
@@ -77,12 +83,13 @@ function FormValidation() {
       errors.meassage = "";
     }
     setValidation(errors);
+    console.log(validation, "val State");
   }
   useEffect(() => {
-    checkValidation();
+     checkValidation();
   }, [inputValues]);
 
-
+  console.log("validation-----name:=", validation.name)
   return (
     <>
       <h1>Form </h1>
@@ -92,11 +99,11 @@ function FormValidation() {
         <label>
           Name:
           <Input type="text" name="name"
-            onChange={(event) => handleChange(event)}
+            onChange={(event) => { handleChange(event); console.log("name=", validation.name, "return ke andder errname") }}
             value={inputValues.name}
-            />
+          />
         </label><b>
-          { <span style={{color: 'red'}}>{validation.name}</span>}
+          {<span style={{ color: 'red' }}>{validation.name}</span>}
         </b><br /><br />
         <label>
           Email:
@@ -106,8 +113,7 @@ function FormValidation() {
             value={inputValues.email}
           />
         </label><b>
-          {/* <span id="Email"> </span> */}
-          {<span style={{color: 'red'}}>{validation.email}</span>}
+          {<span style={{ color: 'red' }}>{validation.email}</span>}
         </b><br /><br />
         <label>
           Phone Number:
@@ -117,9 +123,8 @@ function FormValidation() {
             value={inputValues.number}
           />
         </label><b>
-          {/* <span id="PhoneNo"> </span> */}
-          {<span style={{color: 'red'}}>{validation.number}</span>}
-          </b><br /><br />
+          {<span style={{ color: 'red' }}>{validation.number}</span>}
+        </b><br /><br />
         <label>
           Meassage:
           <TextareaAutosize
@@ -128,9 +133,7 @@ function FormValidation() {
             value={inputValues.meassage}
           />
         </label><b>
-          {/* <span id="Meassage"> </span> */}
-
-          {<span style={{color: 'red'}}>{validation.meassage}</span>}
+          {<span style={{ color: 'red' }}>{validation.meassage}</span>}
         </b><br /><br />
         <button type="submit" value="Submit">Submit</button>
       </form>
